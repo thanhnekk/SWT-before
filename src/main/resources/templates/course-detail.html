@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}" xmlns="http://www.w3.org/1999/html">
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>KodeStudy-Home Page</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <style>
+            body{
+           background:#f5f5f5;
+           margin-top:20px;
+            }
+    /*------- portfolio -------*/
+    .project {
+    margin: 15px 0;
+    }
+
+    .no-gutter .project {
+    margin: 0 !important;
+    padding: 0 !important;
+    }
+
+
+
+    .project-info-box {
+    margin: 15px 0;
+    background-color: #fff;
+    padding: 30px 40px;
+    border-radius: 5px;
+    }
+
+    .project-info-box p {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #d5dadb;
+    }
+
+    .project-info-box p:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+    }
+    img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    -webkit-backface-visibility: hidden;
+    }
+            .lesson-item {
+                margin-bottom: 10px;
+                border-radius: 5px;
+                overflow: hidden;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+                max-height: 100px;
+                overflow-y: auto;
+            }
+
+            .lesson-content {
+                padding: 10px;
+            }
+
+            .lesson-link {
+                text-decoration: none;
+                color: #333;
+            }
+
+            .lesson-link:hover {
+                text-decoration: underline;
+            }
+
+            .lesson-title {
+                margin: 0;
+                font-size: 16px;
+                font-weight: bold;
+            }
+
+    .btn-xs.btn-icon span, .btn-xs.btn-icon i {
+    line-height: 34px;
+    }
+    .btn-icon.btn-circle span, .btn-icon.btn-circle i {
+    margin-top: -1px;
+    margin-right: -1px;
+    }
+    .btn-icon i {
+    margin-top: -1px;
+    }
+    .btn-icon span, .btn-icon i {
+    display: block;
+    line-height: 50px;
+    }
+    a.btn, a.btn-social {
+    display: inline-block;
+    }
+    .mr-5 {
+    margin-right: 5px !important;
+    }
+    .mb-0 {
+    margin-bottom: 0 !important;
+    }
+    .btn-facebook, .btn-facebook:active, .btn-facebook:focus {
+    color: #fff !important;
+    background: #4e68a1;
+    border: 2px solid #4e68a1;
+    }
+    .btn-circle {
+    border-radius: 50% !important;
+    }
+    .project-info-box p {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #d5dadb;
+    }
+    p {
+    font-family: "Barlow", sans-serif !important;
+    font-weight: 300;
+    font-size: 1rem;
+    color: #686c6d;
+    letter-spacing: 0.03rem;
+    margin-bottom: 10px;
+    }
+    b, strong {
+    font-weight: 700 !important;
+    }
+    </style>
+</head>
+<body layout:fragment="body">
+<div th:if="${param.saved}" class="alert alert-success text-sm-center">
+    You have enrolled successfully!
+</div>
+<div class="container" >
+    <div class="row">
+        <div class="col-md-5">
+            <div class="project-info-box mt-0">
+                <h5 th:text="${course.getName()}"></h5>
+                <p class="mb-0" th:text="${course.getDescription()}"></p>
+                <div th:if="${session.user == null }">
+                        <form th:action="@{enroll/{courseId}(courseId=${course.getId()})}" method="post">
+                            <button class="btn btn-primary btn-sm" type="submit">Enroll me!</button>
+                        </form>
+                </div>
+                <div th:if="${session.user != null }">
+                <div th:if="${session.user.findEnrolled(course) == null}">
+                <form th:action="@{enroll/{courseId}(courseId=${course.getId()})}" method="post">
+      <button class="btn btn-primary btn-sm" type="submit">Enroll me!</button>
+                </form>
+                </div>
+                </div>
+            </div><!-- / project-info-box -->
+
+            <div class="project-info-box" >
+                <p><b>Created By:</b> <p th:text="${course.getUser().getUsername()}"></p>
+                <p><b>Created On:</b> <p> 01.01.2024</p>
+                <p><b>Budget:</b><p class="mb-0"> $0</p>
+            </div>
+
+        </div><!-- / column -->
+
+        <div class="col-md-7">
+            <div class="project-info-box" >
+                <h1>Start learning</h1>
+                <div class="lesson-item" th:each="les: ${course.getLessons()}">
+                    <div class="lesson-content" style="background-color: #babbbc;display: flex;justify-content: space-between">
+                        <div class="user">
+                        <a class="lesson-link" th:href="@{/lessons/{lessonId}(lessonId=${les.getId()})}">
+                            <p class="lesson-title" th:text="${les.getTitle()}"></p>
+                        </a>
+                        </div>
+                    <div class="admin" th:if="${user != null && user.getRoles().get(0).getName()=='ADMIN'}">
+
+                        <a th:href="@{lessons/{lessonId}/del(lessonId=${les.getId()})}">
+                            <img style="width:30px;"  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6QoBK_Gr1Qh1faifAP0j2Ve0UB_5LTEb6hD0eXL6kpRs5OSXcDGgtPoHnIfEHqIXjJKQ&usqp=CAU">
+                        </a>
+                    </div>
+                    </div>
+                </div>
+                <div class="admin" style="margin-left: 250px" th:if="${user != null && user.getRoles().get(0).getName()=='ADMIN'}">
+                        <a th:href="@{/lessons/{courseId}/new(courseId=${course.getId()})}"><img style="max-width: 50px" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa85IJEAk0J5Hu-Z1oADHXnxxDLouEgEetYA&s"></a>
+                </div>
+            </div>
+            <div class="project-info-box">
+                <p><b>Categories:</b> Design, Illustration</p>
+                <p><b>Skills:</b> Illustrator</p>
+            </div><!-- / project-info-box -->
+        </div><!-- / column -->
+    </div>
+</div>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js'></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+
+</body>
+</html>

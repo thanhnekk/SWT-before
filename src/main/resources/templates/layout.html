@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       >
+<head th:fragment="header">
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link th:href="@{/css/styles.css}" rel="stylesheet" />
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">KodeWeb</title>
+</head>
+
+<!-- Responsive navbar-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container px-5">
+        <a class="navbar-brand" th:href="@{/courses}">KodeStudy</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" th:href="@{/courses}">Courses</a></li>
+                <li class="nav-item"><a class="nav-link "  th:href="@{/courses/ongoing}">On-going</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/about}">About</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/loginn}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/register}"> Register</a></li>
+                <li class="nav-item" th:if="${session.user!=null}"><a class="nav-link" th:href="@{/logoutt}">Logout</a></li>
+                <li class="nav-item" th:if="${session.user!=null}"><a class="nav-link" ><img style="height: 25px" src="https://cdn-icons-png.flaticon.com/512/8345/8345328.png"></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<body layout:fragment="body"></body>
+<footer class="py-5 bg-dark d-flex align-items-end">
+    <div class="container px-4 px-lg-5"><p class="m-0 text-center text-white">Copyright &copy; KodeStudy 2024</p></div><br>
+    <div class="container px-4 px-lg-5"><p class="m-0 text-center text-white">Contact: 09450999122 | kodestudy9@gmail.com</p></div><br>
+    <div class="container px-4 px-lg-5"><p class="m-0 text-center text-white">We always want you the best</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+</html>

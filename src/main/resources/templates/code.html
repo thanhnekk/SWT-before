@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Output Checker</title>
+  <link rel="stylesheet" href="css/styles1.css">
+  <style type="text/css">
+    br { display: none; }
+    textarea{display: block;margin: 10px 0; width:80%; border: 1px solid #333;}
+
+    iframe{display: block;margin: 10px 0; width:80%; resize:both; overflow: auto; border: 1px solid #333;}
+  </style>
+</head>
+<body>
+<header>
+  <h1>Code Output Checker</h1>
+</header>
+
+<textarea rows="5" cols="50" placeholder="Type HTML Code Here"></textarea>
+
+<button style="border:1" type="button" onclick="updateIframe()"><i class="fa fa-pencil-square-o"></i>Run The Code</button>
+
+<iframe id="myframe"></iframe>
+
+
+</body>
+<script src="js/script1.js"></script>
+<script type="text/javascript">
+  function updateIframe(){
+    var myFrame = $("#myframe").contents().find('body');
+    var textareaValue = $("textarea").val();
+    myFrame.html(textareaValue);
+  }
+</script>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+</html>

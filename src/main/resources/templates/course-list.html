@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>KodeStudy-Home Page</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<body layout:fragment="body">
+<div th:if="${param.success}" class="alert alert-success text-sm-center">
+    You are registered successfully!
+</div>
+<div th:if="${param.loginn}" class="alert alert-success text-sm-center">
+    You are login successfully!
+</div>
+<div th:if="${param.update}" class="alert alert-success text-sm-center">
+    You are change password successfully!
+</div>
+<div class="container px-4 px-lg-5">
+    <!-- Heading Row-->
+    <div class="row gx-4 gx-lg-5 align-items-center my-5">
+        <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0" src="https://www.rasmussen.edu/images/rasmussenlibraries/blogs/school-of-technology/2020/learn-to-code.jpg" alt="..." /></div>
+        <div class="col-lg-5">
+            <h1 class="font-weight-light">Welcome to KodeWeb</h1>
+            <p></p>
+            <a class="btn btn-primary" href="#begin">Go to courses!</a>
+        </div>
+    </div>
+    <!-- Call to Action-->
+    <div class="card text-white bg-secondary my-5 py-4 text-center">
+        <div class="card-body"><p class="text-white m-0" style="font-size: 30px;">KodeWeb is optimized for learning and training.</p></div>
+    </div>
+    <div>
+        <form th:action="@{/courses/search}" class="form-inline my-2 my-lg-0 mb-3">
+            <input name="query" class="form-control mr-sm-2 mb-5" type="search" placeholder="Search courses" aria-label="Search">
+        </form>
+    </div>
+    <!-- Content Row-->
+    <div class="row gx-4 gx-lg-5" id="begin">
+
+        <div th:each="course: ${courses}" class="col-md-4 mb-5">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h2 class="card-title" th:text="${course.name}"></h2>
+                    <p class="card-text" th:text="${course.getDescription()}"></p>
+                </div>
+                <div class="card-footer"><a class="btn btn-primary btn-sm" th:href="@{/courses/{courseId}(courseId=${course.id})}">More Info</a>
+                    <div class="forad" th:if="${user1 != null && user1.getRoles().get(0).getName()=='ADMIN'}">
+                    <a class="btn btn-primary btn-sm"  th:href="@{/courses/{courseId}/edit(courseId=${course.id})}">Edit</a>
+                    <a class="btn btn-primary btn-sm"  th:href="@{/courses/{courseId}/delete(courseId=${course.id})}">Delete</a>
+                </div>
+                </div>
+            </div>
+        </div>
+
+            <div  th:if="${user1 != null && user1.getRoles().get(0).getName()=='ADMIN'}" class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <div class="card-body" >
+                        <h2 class="card-title text-sm-center" >Create new course </h2>
+                        <div class="card-img" style="margin-left: 95px" >
+                        <a th:href="@{courses/new}">
+                        <img style="height:140px" class="align-items-md-center " src="https://t4.ftcdn.net/jpg/01/14/04/65/360_F_114046562_CoMtlfJGu0WhnDHLMz8qOHtHblQBH9QK.jpg"/></a>
+                    </div>
+                    </div>
+                </div>
+        </div>
+        </div>
+</div>
+
+
+
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+</body>
+</html>
